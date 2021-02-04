@@ -1,12 +1,11 @@
 import { h, defineComponent } from "@vue/runtime-core"
-import startPageImg from '../../assets/images/start_page.jpg'
-import startBtnImg from '../../assets/images/startBtn.png'
+import endPageImg from '../../assets/images/end_page.jpg'
+import restartBtnImg from '../../assets/images/restartBtn.png'
 export default defineComponent({
   setup (props, ctx) {
     // 没有this
     // setup作为vue3的入口函数
     const onClick = () => {
-      console.log('1212')
       ctx.emit('changePage', 'GamePage')
     }
     return {
@@ -18,9 +17,9 @@ export default defineComponent({
     // 背景图片
     return h("Container",
       [
-        h("Sprite", { texture: startPageImg }),
+        h("Sprite", { texture: endPageImg }),
         h("Sprite", {
-          texture: startBtnImg,
+          texture: restartBtnImg,
           x: 226,
           y: 514,
           interactive: true, // 允许交互 pix里的参数

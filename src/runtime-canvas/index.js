@@ -1,21 +1,20 @@
 import { createRenderer } from '@vue/runtime-core'
-import { Graphics, Text } from 'pixi.js'
+import { Graphics, Text, Container, Sprite, Texture } from 'pixi.js'
 const renderer = createRenderer({
   createElement (type) {
     console.log(type)
     // 绘制矩形
     // pixi.js的方法
     let element
-    if (type === 'rect') {
-      element = new Graphics()
-      element.beginFill(0xff0000)
-      element.drawRect(0, 0, 500, 500)
-      element.endFill()
-    } else if (type === 'circle') {
-      element = new Graphics()
-      element.beginFill(0xcccccc)
-      element.drawCircle(0, 0, 100)
-      element.endFill()
+    switch (type) {
+      case 'Container':
+        element = new Container()
+        break;
+      case 'Sprite':
+        element = new Sprite()
+        break;
+      default:
+        break;
     }
     return element
   },
@@ -28,7 +27,17 @@ const renderer = createRenderer({
   },
   patchProp(el, key, prevValue, nextValue) {
     // pixi
-    el[key] = nextValue
+    switch (key) {
+      case 'texture':
+        el.texture = Texture.from(nextValue)
+        break;
+      case 'onClick': 
+        el.on('pointertap', nextValue)
+        break;
+      default:
+        el[key] = nextValue
+    }
+    
   },
   insert(el, parent) {
     parent.addChild(el)
